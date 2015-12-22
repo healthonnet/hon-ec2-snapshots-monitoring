@@ -17,7 +17,7 @@ Version 0.01
 our $VERSION = '0.01';
 
 use base 'Exporter';
-our @EXPORT_OK = qw/findLogsOfTheDay/;
+our @EXPORT_OK = qw/findLogsOfTheDay isLogOk/;
 
 =head1 SYNOPSIS
 
@@ -54,11 +54,35 @@ sub findLogsOfTheDay {
   return @logsOfTheDay;
 }
 
-=head2 function2
+=head2 isLogOk
+
+Verify specific part of the log
 
 =cut
 
-sub function2 {
+sub isLogOk {
+  my @lines = @_;
+  my $isSnapshot = 0;
+  my $isTagging = 0;
+  my $isPurging = 0;
+  my $isPurgeAfter = 0;
+
+  foreach my $line (@lines){
+    if ($line =~ m/^Snapshots\staken\sby\sec2-automate-backup-awscli\.sh/gi){
+      $isSnapshot = 1;
+    }
+    if ($line =~ m/Tagging\sSnapshot\ssnap-/gi){
+      $isTagging = 1;
+    }
+    if ($line =~m/Snapshot\sPurging\sis/gi){
+      $isPurging = 1;
+    }
+    if ($line =~m/PurgeAfterFE\sdate/gi){
+      $isPurgeAfter = 1;
+    }
+  }
+
+  return ($isSnapshot and $isTagging and $isPurging and $isPurgeAfter);
 }
 
 =head1 AUTHOR
