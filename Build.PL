@@ -16,7 +16,7 @@ my $builder = Module::Build->new(
         'Test::More' => 0,
     },
     requires => {
-        #'ABC'              => 1.6,
+        'IO::All' => 0.86,
         #'Foo::Bar::Module' => 5.0401,
     },
     add_to_cleanup     => [ 'HON-EC2-Snapshots-Monitoring-*' ],

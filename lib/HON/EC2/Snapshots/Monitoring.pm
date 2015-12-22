@@ -16,30 +16,42 @@ Version 0.01
 
 our $VERSION = '0.01';
 
+use base 'Exporter';
+our @EXPORT_OK = qw/findLogsOfTheDay/;
 
 =head1 SYNOPSIS
 
-Quick summary of what the module does.
-
-Perhaps a little code snippet.
-
-    use HON::EC2::Snapshots::Monitoring;
-
-    my $foo = HON::EC2::Snapshots::Monitoring->new();
-    ...
-
-=head1 EXPORT
-
-A list of functions that can be exported.  You can delete this section
-if you don't export anything, such as for a purely object-oriented module.
+Several utilities functions
 
 =head1 SUBROUTINES/METHODS
 
-=head2 function1
+=head2 findLogsOfTheDay
+
+Find logs of the day
 
 =cut
 
-sub function1 {
+sub findLogsOfTheDay {
+  my ($refLines, $date) = @_;
+  my @logsOfTheDay = ();
+  my $keepLogs = 0;
+
+  foreach my $line (@{$refLines}){
+    if ($line =~ m/Starting\s\w+\sBackup\s--\s(\d{1,2}-\d{2}-\d{4})/gi){
+      if ($1 eq $date) {
+        $keepLogs = 1;
+      }
+    }
+
+    if ($keepLogs == 1) {
+      push @logsOfTheDay, $line;
+    }
+
+    if ($line =~ m/Backup\sdone/gi){
+      $keepLogs = 0;
+    }
+  }
+  return @logsOfTheDay;
 }
 
 =head2 function2
