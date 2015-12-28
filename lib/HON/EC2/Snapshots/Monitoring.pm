@@ -6,7 +6,7 @@ use warnings;
 
 =head1 NAME
 
-HON::EC2::Snapshots::Monitoring - The great new HON::EC2::Snapshots::Monitoring!
+HON::EC2::Snapshots::Monitoring - Log file monitoring
 
 =head1 VERSION
 
@@ -21,6 +21,13 @@ our @EXPORT_OK = qw/findLogsOfTheDay isLogOk/;
 
 =head1 SYNOPSIS
 
+  use HON::EC2::Snapshots::Monitoring;
+
+  my @logs = findLogsOfTheDay(\@lines, '12-18-2015');
+  isLogOk(@logs);
+
+=head1 DESCRIPTION
+
 Several utilities functions
 
 =head1 SUBROUTINES/METHODS
@@ -32,22 +39,22 @@ Find logs of the day
 =cut
 
 sub findLogsOfTheDay {
-  my ($refLines, $date) = @_;
+  my ( $refLines, $date ) = @_;
   my @logsOfTheDay = ();
-  my $keepLogs = 0;
+  my $keepLogs     = 0;
 
-  foreach my $line (@{$refLines}){
-    if ($line =~ m/Starting\s\w+\sBackup\s--\s(\d{1,2}-\d{2}-\d{4})/gi){
-      if ($1 eq $date) {
+  foreach my $line ( @{$refLines} ) {
+    if ( $line =~ m/Starting\s\w+\sBackup\s--\s(\d{1,2}-\d{2}-\d{4})/xmsgi ) {
+      if ( $1 eq $date ) {
         $keepLogs = 1;
       }
     }
 
-    if ($keepLogs == 1) {
+    if ( $keepLogs == 1 ) {
       push @logsOfTheDay, $line;
     }
 
-    if ($line =~ m/Backup\sdone/gi){
+    if ( $line =~ m/Backup\sdone/xmsgi ) {
       $keepLogs = 0;
     }
   }
@@ -61,35 +68,37 @@ Verify specific part of the log
 =cut
 
 sub isLogOk {
-  my @lines = @_;
-  my $isSnapshot = 0;
-  my $isTagging = 0;
-  my $isPurging = 0;
+  my @lines        = @_;
+  my $isSnapshot   = 0;
+  my $isTagging    = 0;
+  my $isPurging    = 0;
   my $isPurgeAfter = 0;
 
-  foreach my $line (@lines){
-    if ($line =~ m/^Snapshots\staken\sby\sec2-automate-backup-awscli\.sh/gi){
+  foreach my $line (@lines) {
+    if (
+      $line =~ m/^Snapshots\staken\sby\sec2-automate-backup-awscli[.]sh/xmsgi )
+    {
       $isSnapshot = 1;
     }
-    if ($line =~ m/Tagging\sSnapshot\ssnap-/gi){
+    if ( $line =~ m/Tagging\sSnapshot\ssnap-/xmsgi ) {
       $isTagging = 1;
     }
-    if ($line =~m/Snapshot\sPurging\sis/gi){
+    if ( $line =~ m/Snapshot\sPurging\sis/xmsgi ) {
       $isPurging = 1;
     }
-    if ($line =~m/PurgeAfterFE\sdate/gi){
+    if ( $line =~ m/PurgeAfterFE\sdate/xmsgi ) {
       $isPurgeAfter = 1;
     }
   }
 
-  return ($isSnapshot and $isTagging and $isPurging and $isPurgeAfter);
+  return ( $isSnapshot and $isTagging and $isPurging and $isPurgeAfter );
 }
 
 =head1 AUTHOR
 
 William Belle, C<< <william.belle at gmail.com> >>
 
-=head1 BUGS
+=head1 BUGS AND LIMITATIONS
 
 Please report any bugs or feature requests to C<bug-hon-ec2-snapshots-monitoring at rt.cpan.org>, or through
 the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=HON-EC2-Snapshots-Monitoring>.  I will be notified, and then you'll
@@ -152,4 +161,4 @@ if not, write to the Free Software Foundation, Inc.,
 
 =cut
 
-1; # End of HON::EC2::Snapshots::Monitoring
+1;    # End of HON::EC2::Snapshots::Monitoring

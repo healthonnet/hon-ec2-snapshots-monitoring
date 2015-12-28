@@ -1,3 +1,5 @@
+.perlcriticrc
+.perltidyrc
 .travis.yml
 bin/hon-ec2-snapshots-monitoring.pl
 Changes
