@@ -1,6 +1,9 @@
 HON-EC2-Snapshots-Monitoring
 ============================
 
+[![Build Status](https://travis-ci.org/healthonnet/hon-ec2-snapshots-monitoring.svg?branch=master)](https://travis-ci.org/healthonnet/hon-ec2-snapshots-monitoring)
+[![Coverage Status](https://coveralls.io/repos/healthonnet/hon-ec2-snapshots-monitoring/badge.svg?branch=master&service=github)](https://coveralls.io/github/healthonnet/hon-ec2-snapshots-monitoring?branch=master)
+
 Log file monitoring
 
 Usage
