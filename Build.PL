@@ -19,6 +19,11 @@ my $builder = Module::Build->new(
         'IO::All'     => 0.86,
         'Time::Piece' => 1.31,
     },
+    meta_merge => {
+        resources => {
+            repository => 'https://github.com/healthonnet/hon-ec2-snapshots-monitoring',
+        },
+    },
     add_to_cleanup     => [ 'HON-EC2-Snapshots-Monitoring-*' ],
     create_makefile_pl => 'traditional',
 );
