@@ -17,7 +17,7 @@ hon-ec2-snapshots-monitoring.pl - Monitor EC2 snapshots log
 
 =head1 VERSION
 
-Version 0.02
+Version 0.03
 
 =head1 USAGE
 
@@ -41,7 +41,7 @@ Monitor EC2 snapshots log
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 my ( $log, $help );
 GetOptions(
