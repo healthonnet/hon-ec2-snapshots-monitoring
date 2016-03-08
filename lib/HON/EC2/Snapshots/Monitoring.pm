@@ -72,7 +72,6 @@ sub isLogOk {
   my $isSnapshot   = 0;
   my $isTagging    = 0;
   my $isPurging    = 0;
-  my $isPurgeAfter = 0;
 
   foreach my $line (@lines) {
     if (
@@ -86,12 +85,9 @@ sub isLogOk {
     if ( $line =~ m/Snapshot\sPurging\sis/xmsgi ) {
       $isPurging = 1;
     }
-    if ( $line =~ m/PurgeAfterFE\sdate/xmsgi ) {
-      $isPurgeAfter = 1;
-    }
   }
 
-  return ( $isSnapshot and $isTagging and $isPurging and $isPurgeAfter );
+  return ( $isSnapshot and $isTagging and $isPurging );
 }
 
 =head1 AUTHOR

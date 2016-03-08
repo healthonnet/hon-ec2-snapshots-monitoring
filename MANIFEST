@@ -17,6 +17,5 @@ t/pod-coverage.t
 t/pod.t
 t/resources/bad-example-1.log
 t/resources/bad-example-2.log
-t/resources/bad-example-3.log
 t/resources/good-example.log
 xt/boilerplate.t

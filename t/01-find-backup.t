@@ -4,7 +4,7 @@ use warnings;
 use IO::All;
 use HON::EC2::Snapshots::Monitoring qw/findLogsOfTheDay isLogOk/;
 
-use Test::More tests => 10;
+use Test::More tests => 8;
 
 
 my @lines = io('t/resources/good-example.log')->slurp;
@@ -18,7 +18,6 @@ ok(isLogOk(@logs));
 my @badExamples = (
   't/resources/bad-example-1.log',
   't/resources/bad-example-2.log',
-  't/resources/bad-example-3.log'
 );
 
 foreach my $example (@badExamples){
